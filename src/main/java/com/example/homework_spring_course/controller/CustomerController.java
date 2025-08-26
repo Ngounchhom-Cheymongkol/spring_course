@@ -1,5 +1,6 @@
 package com.example.homework_spring_course.controller;
 
+import com.example.homework_spring_course.anotation.LoggerTime;
 import com.example.homework_spring_course.entity.Customer;
 import com.example.homework_spring_course.repository.CustomerRepository;
 import com.example.homework_spring_course.service.CustomerService;
@@ -17,26 +18,32 @@ public class CustomerController {
     private CustomerService service;
 
     @PostMapping
+    @LoggerTime
     ResponseEntity<Customer> addCustomer(@RequestBody Customer customer){
         return ResponseEntity.ok().body(service.addCustomer(customer));
     }
 
     @PutMapping
+    @LoggerTime
     ResponseEntity<Customer> updateCustomer(@RequestBody Customer customer){
         return ResponseEntity.ok().body(service.updateCustomer(customer));
     }
 
     @GetMapping("all")
+    @LoggerTime
     ResponseEntity<List<Customer>> getCustomer(){
         return ResponseEntity.ok().body(service.findAllCustomers());
     }
 
     @GetMapping("{id}")
-    ResponseEntity<Customer> getCustomer(@PathVariable Long id){
+    @LoggerTime
+    ResponseEntity<Customer> getCustomer(@PathVariable Long id) throws InterruptedException {
+        Thread.sleep(2000);
         return ResponseEntity.ok().body(service.findCustomerById(id));
     }
 
     @DeleteMapping("{id}")
+    @LoggerTime
     ResponseEntity<MessageResponse> deleteCustomer(@PathVariable Long id){
         service.deleteCustomer(id);
         return ResponseEntity.ok().body(successResponse());
