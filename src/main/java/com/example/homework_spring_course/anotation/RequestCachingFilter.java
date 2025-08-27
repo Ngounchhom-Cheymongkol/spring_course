@@ -17,7 +17,6 @@ public class RequestCachingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request,
                                     HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
-        // Wrap request so the body is cached
         ContentCachingRequestWrapper wrappedRequest = new ContentCachingRequestWrapper(request);
         filterChain.doFilter(wrappedRequest, response);
     }
